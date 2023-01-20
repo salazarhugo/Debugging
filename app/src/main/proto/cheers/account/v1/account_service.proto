@@ -3,14 +3,43 @@ syntax = "proto3";
 package cheers.account.v1;
 
 
+import "google/api/annotations.proto";
+
 option java_multiple_files = true;
 option go_package = "github.com/salazarhugo/cheers1/gen/go/cheers/account/v1;account";
 
 service AccountService {
-  rpc GetAccount (GetAccountRequest) returns (GetAccountResponse);
-  rpc UpdateAccount (UpdateAccountRequest) returns (UpdateAccountResponse);
-  rpc DeleteAccount (DeleteAccountRequest) returns (DeleteAccountResponse);
-  rpc ListAccount (ListAccountRequest) returns (ListAccountResponse);
+  rpc CreateAccount (CreateAccountRequest) returns (CreateAccountResponse) {
+    option (google.api.http) = {
+      post: "/v1/accounts"
+      body: "*"
+    };
+  }
+
+  rpc GetAccount (GetAccountRequest) returns (GetAccountResponse) {
+    option (google.api.http) = {
+      get: "/v1/accounts/{account_id}"
+    };
+  }
+
+  rpc UpdateAccount (UpdateAccountRequest) returns (UpdateAccountResponse) {
+    option (google.api.http) = {
+      patch: "/v1/accounts"
+      body: "*"
+    };
+  }
+
+  rpc DeleteAccount (DeleteAccountRequest) returns (DeleteAccountResponse) {
+    option (google.api.http) = {
+      delete: "/v1/accounts/{account_id}"
+    };
+  }
+
+  rpc ListAccount (ListAccountRequest) returns (ListAccountResponse) {
+    option (google.api.http) = {
+      get: "/v1/accounts/list"
+    };
+  }
 }
 
 message Account {
